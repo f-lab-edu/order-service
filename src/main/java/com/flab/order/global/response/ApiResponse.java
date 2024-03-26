@@ -23,12 +23,12 @@ public class ApiResponse<T> {
     private T result;
 
     // 성공 응답
-    public static <T> ApiResponse<T> onSuccess(T result){
+    public static <T> ApiResponse<T> onSuccess(T result) {
         return new ApiResponse<>(true, SuccessStatus._OK.getCode(), SuccessStatus._OK.getMessage(), result);
     }
 
     // 실패 응답
-    public static <T> ApiResponse<T> onFailure(String code, String message, T result){
+    public static <T> ApiResponse<T> onFailure(String code, String message, T result) {
         return new ApiResponse<>(false, code, message, result);
     }
 }

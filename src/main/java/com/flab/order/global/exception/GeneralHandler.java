@@ -9,7 +9,7 @@ public class GeneralHandler extends RuntimeException {
 
     private BaseCode errorStatus;
 
-    public GeneralHandler(BaseCode errorStatus){
+    public GeneralHandler(BaseCode errorStatus) {
         super(errorStatus.getDto().getMessage());
         this.errorStatus = errorStatus;
     }

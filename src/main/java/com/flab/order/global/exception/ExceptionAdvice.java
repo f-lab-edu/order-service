@@ -26,21 +26,21 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
         e.printStackTrace();
 
-        return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(),request, e.getMessage());
+        return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(), request, e.getMessage());
     }
 
     // GeneralHandler 타입의 예외 처리(커스텀 예외 처리)
     @ExceptionHandler(value = GeneralHandler.class)
     public ResponseEntity onThrowException(GeneralHandler generalHandler, HttpServletRequest request) {
         ResponseDTO errorHttpStatus = generalHandler.getErrorHttpStatus();
-        return handleExceptionInternal(generalHandler,errorHttpStatus,null,request);
+        return handleExceptionInternal(generalHandler, errorHttpStatus, null, request);
     }
 
     // 예외와 에러 상태를 받아 ResponseEntity 생성
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ResponseDTO error,
                                                            HttpHeaders headers, HttpServletRequest request) {
 
-        ApiResponse<Object> body = ApiResponse.onFailure(error.getCode(),error.getMessage(),null);
+        ApiResponse<Object> body = ApiResponse.onFailure(error.getCode(), error.getMessage(), null);
 
         WebRequest webRequest = new ServletWebRequest(request);
         return super.handleExceptionInternal(
@@ -55,7 +55,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     // 예외와 에러 상태, 추가 정보를 받아 ResponseEntity 생성
     private ResponseEntity<Object> handleExceptionInternalFalse(Exception e, ErrorStatus errorCommonStatus,
                                                                 HttpHeaders headers, HttpStatus status, WebRequest request, String errorPoint) {
-        ApiResponse<Object> body = ApiResponse.onFailure(errorCommonStatus.getCode(),errorCommonStatus.getMessage(),errorPoint);
+        ApiResponse<Object> body = ApiResponse.onFailure(errorCommonStatus.getCode(), errorCommonStatus.getMessage(), errorPoint);
         return super.handleExceptionInternal(
                 e,
                 body,
@@ -68,7 +68,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     // 예외와 에러 상태, 에러 메시지 Map을 받아 ResponseEntity 생성
     private ResponseEntity<Object> handleExceptionInternalArgs(Exception e, HttpHeaders headers, ErrorStatus errorCommonStatus,
                                                                WebRequest request, Map<String, String> errorArgs) {
-        ApiResponse<Object> body = ApiResponse.onFailure(errorCommonStatus.getCode(),errorCommonStatus.getMessage(),errorArgs);
+        ApiResponse<Object> body = ApiResponse.onFailure(errorCommonStatus.getCode(), errorCommonStatus.getMessage(), errorArgs);
         return super.handleExceptionInternal(
                 e,
                 body,
