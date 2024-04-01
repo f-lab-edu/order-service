@@ -7,47 +7,44 @@ DROP TABLE IF EXISTS MEMBER;
 
 CREATE TABLE `MEMBER`
 (
-    `id`        VARCHAR(255) NOT NULL,
-    `email`     VARCHAR(255),
-    `name`      VARCHAR(255),
-    `password`  VARCHAR(255),
-    `phone`     VARCHAR(255),
-    `address`   VARCHAR(255),
-    `balance`   DECIMAL(10, 2) DEFAULT 0,
+    `id`        BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `email`     VARCHAR(254),
+    `name`      VARCHAR(50),
+    `password`  VARCHAR(60),
+    `phone`     VARCHAR(20),
+    `address`   VARCHAR(200),
+    `balance`   INT DEFAULT 0,
     `createdAt` DATETIME,
-    `updatedAt` DATETIME,
-    PRIMARY KEY (`id`)
+    `updatedAt` DATETIME
 );
 
 CREATE TABLE `PRODUCT`
 (
-    `id`          VARCHAR(255) NOT NULL,
-    `name`        VARCHAR(255),
-    `description` VARCHAR(255),
-    `price`       DECIMAL(10, 2),
+    `id`          BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `name`        VARCHAR(100),
+    `description` VARCHAR(200),
+    `price`       INT,
     `stock`       INT,
-    `createdAt`   DATETIME,
-    PRIMARY KEY (`id`)
+    `createdAt`   DATETIME
 );
 
 
 CREATE TABLE `ORDERS`
 (
-    `id`         VARCHAR(255) NOT NULL,
-    `memberId`   VARCHAR(255) NOT NULL,
+    `id`         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `memberId`   BIGINT NOT NULL,
     `status`     ENUM('PENDING', 'COMPLETE', 'SHIPPING', 'DELIVERED', 'CANCELLED'),
-    `totalPrice` DECIMAL(10, 2),
+    `totalPrice` INT,
     `createdAt`  DATETIME,
     `updatedAt`  DATETIME,
-    PRIMARY KEY (`id`),
     FOREIGN KEY (`memberId`) REFERENCES `MEMBER` (`id`)
 );
 
 CREATE TABLE `ORDER_DETAIL`
 (
-    `orderId`   VARCHAR(255) NOT NULL,
-    `productId` VARCHAR(255) NOT NULL,
-    `price`     DECIMAL(10, 2),
+    `orderId`   BIGINT NOT NULL,
+    `productId` BIGINT NOT NULL,
+    `price`     INT,
     `quantity`  INT,
     PRIMARY KEY (`orderId`, `productId`),
     FOREIGN KEY (`orderId`) REFERENCES `ORDERS` (`id`),
@@ -56,8 +53,8 @@ CREATE TABLE `ORDER_DETAIL`
 
 CREATE TABLE `CART`
 (
-    `memberId`  VARCHAR(255) NOT NULL,
-    `productId` VARCHAR(255) NOT NULL,
+    `memberId`  BIGINT NOT NULL,
+    `productId` BIGINT NOT NULL,
     `quantity`  INT,
     `createdAt` DATETIME,
     PRIMARY KEY (`memberId`, `productId`),
@@ -67,12 +64,11 @@ CREATE TABLE `CART`
 
 CREATE TABLE `PAYMENT`
 (
-    `id`        VARCHAR(255) NOT NULL,
-    `orderId`   VARCHAR(255) NOT NULL,
-    `amount`    DECIMAL(10, 2),
+    `id`        BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `orderId`   BIGINT NOT NULL,
+    `amount`    INT,
     `status`    ENUM('PENDING', 'COMPLETE', 'CANCELLED'),
     `createdAt` DATETIME,
     `updatedAt` DATETIME,
-    PRIMARY KEY (`id`),
     FOREIGN KEY (`orderId`) REFERENCES `ORDERS` (`id`)
 );
