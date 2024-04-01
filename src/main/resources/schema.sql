@@ -14,8 +14,8 @@ CREATE TABLE `MEMBER`
     `phone`     VARCHAR(20),
     `address`   VARCHAR(200),
     `balance`   INT DEFAULT 0,
-    `createdAt` DATETIME,
-    `updatedAt` DATETIME
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `PRODUCT`
@@ -25,7 +25,7 @@ CREATE TABLE `PRODUCT`
     `description` VARCHAR(200),
     `price`       INT,
     `stock`       INT,
-    `createdAt`   DATETIME
+    `createdAt`   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -33,10 +33,10 @@ CREATE TABLE `ORDERS`
 (
     `id`         BIGINT PRIMARY KEY AUTO_INCREMENT,
     `memberId`   BIGINT NOT NULL,
-    `status`     ENUM('PENDING', 'COMPLETE', 'SHIPPING', 'DELIVERED', 'CANCELLED'),
+    `status`     ENUM('PENDING', 'COMPLETE', 'CANCELLED'),
     `totalPrice` INT,
-    `createdAt`  DATETIME,
-    `updatedAt`  DATETIME,
+    `createdAt`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`memberId`) REFERENCES `MEMBER` (`id`)
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE `CART`
     `memberId`  BIGINT NOT NULL,
     `productId` BIGINT NOT NULL,
     `quantity`  INT,
-    `createdAt` DATETIME,
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`memberId`, `productId`),
     FOREIGN KEY (`memberId`) REFERENCES `MEMBER` (`id`),
     FOREIGN KEY (`productId`) REFERENCES `PRODUCT` (`id`)
@@ -68,7 +68,7 @@ CREATE TABLE `PAYMENT`
     `orderId`   BIGINT NOT NULL,
     `amount`    INT,
     `status`    ENUM('PENDING', 'COMPLETE', 'CANCELLED'),
-    `createdAt` DATETIME,
-    `updatedAt` DATETIME,
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`orderId`) REFERENCES `ORDERS` (`id`)
 );
