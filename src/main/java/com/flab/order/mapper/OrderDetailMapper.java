@@ -4,7 +4,9 @@ import com.flab.order.domain.entity.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Optional;
+
 @Mapper
 public interface OrderDetailMapper {
-    OrderDetail selectOrderDetail(@Param("orderId")Long orderId, @Param("productId")Long productId);
+    Optional<OrderDetail> selectOrderDetail(@Param("orderId")Long orderId, @Param("productId")Long productId);
 }
