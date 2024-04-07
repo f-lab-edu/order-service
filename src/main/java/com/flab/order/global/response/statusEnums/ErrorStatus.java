@@ -13,7 +13,10 @@ public enum ErrorStatus implements BaseCode {
     // 일반적인 실패 응답
     _BAD_REQUEST(HttpStatus.BAD_REQUEST, "COMMON400", "잘못된 요청입니다."),
     _UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "COMMON401", "인증이 필요합니다."),
-    _INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON500", "서버 내의 문제가 발생했습니다.");
+    _INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON500", "서버 내의 문제가 발생했습니다."),
+
+    MEMBER_NOT_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4000", "존재하지 않는 회원 정보입니다."),
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "MEMBER4010", "비밀번호가 일치하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
