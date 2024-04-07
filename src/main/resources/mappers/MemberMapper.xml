@@ -4,4 +4,8 @@
     <select id="selectMemberById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Member">
         SELECT * FROM MEMBER WHERE id = #{id}
     </select>
+
+    <select id="selectMemberByEmail" parameterType="java.lang.String" resultType="com.flab.order.domain.entity.Member">
+        SELECT * FROM MEMBER WHERE email = #{email}
+    </select>
 </mapper>

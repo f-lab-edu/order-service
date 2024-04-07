@@ -8,4 +8,5 @@ import java.util.Optional;
 @Mapper
 public interface MemberMapper {
     Optional<Member> selectMemberById(Long id);
+    Optional<Member> selectMemberByEmail(String email);
 }
