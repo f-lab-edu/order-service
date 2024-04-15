@@ -26,12 +26,11 @@ public class MemberController {
     @Operation(summary = "로그인 API")
     @PostMapping("/login")
     public ApiResponse<String> login(@Valid @RequestBody MemberRequest.Login request, HttpSession session) {
-        boolean isAuthenticated = memberService.authenticate(request.getEmail(), request.getPassword());
-        if (isAuthenticated) {
-            session.setAttribute("memberEmail", request.getEmail());
-            return ApiResponse.onSuccess("로그인에 성공하였습니다.");
+        if (!memberService.authenticate(request.getEmail(), request.getPassword())) {
+            throw new GeneralHandler(ErrorStatus.INVALID_PASSWORD);
         }
-        throw new GeneralHandler(ErrorStatus.INVALID_PASSWORD);
+        session.setAttribute("memberEmail", request.getEmail());
+        return ApiResponse.onSuccess("로그인에 성공하였습니다.");
     }
 
 }
