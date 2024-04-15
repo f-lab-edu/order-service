@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Mapper
 public interface ProductMapper {
-    Optional<Product> selectProductById(Long id);
+    Optional<Product> findById(Long id);
 }

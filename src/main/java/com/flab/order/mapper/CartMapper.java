@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Mapper
 public interface CartMapper {
-    Optional<Cart> selectCart(@Param("memberId") Long memberId, @Param("productId") Long productId);
+    Optional<Cart> findByMemberIdAndProductId(@Param("memberId") Long memberId, @Param("productId") Long productId);
 }

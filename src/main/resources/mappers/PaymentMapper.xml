@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.order.mapper.PaymentMapper">
-    <select id="selectPaymentById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Payment">
+    <select id="findById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Payment">
         SELECT * FROM PAYMENT WHERE id = #{id}
     </select>
 </mapper>

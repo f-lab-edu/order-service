@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Mapper
 public interface OrdersMapper {
-    Optional<Orders> selectOrdersById(Long id);
+    Optional<Orders> findById(Long id);
 }

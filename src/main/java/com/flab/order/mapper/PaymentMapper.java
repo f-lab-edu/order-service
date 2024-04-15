@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Mapper
 public interface PaymentMapper {
-    Optional<Payment> selectPaymentById(Long id);
+    Optional<Payment> findById(Long id);
 }

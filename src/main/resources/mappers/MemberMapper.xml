@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.order.mapper.MemberMapper">
-    <select id="selectMemberById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Member">
+    <select id="findById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Member">
         SELECT * FROM MEMBER WHERE id = #{id}
     </select>
 
-    <select id="selectMemberByEmail" parameterType="java.lang.String" resultType="com.flab.order.domain.entity.Member">
+    <select id="findByEmail" parameterType="java.lang.String" resultType="com.flab.order.domain.entity.Member">
         SELECT * FROM MEMBER WHERE email = #{email}
     </select>
 </mapper>
