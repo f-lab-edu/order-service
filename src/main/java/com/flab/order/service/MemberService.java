@@ -16,7 +16,7 @@ public class MemberService {
     private final MemberMapper memberMapper;
 
     public boolean authenticate(String email, String password) {
-        Member member = memberMapper.selectMemberByEmail(email)
+        Member member = memberMapper.findByEmail(email)
                 .orElseThrow(()-> new GeneralHandler(ErrorStatus.MEMBER_NOT_EXIST));
 
         return member.getPassword().equals(password);
