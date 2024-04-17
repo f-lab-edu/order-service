@@ -1,6 +1,5 @@
 package com.flab.order.global.interceptor;
 
-
 import com.flab.order.global.exception.GeneralHandler;
 import com.flab.order.global.response.statusEnums.ErrorStatus;
 import jakarta.servlet.http.HttpServletRequest;

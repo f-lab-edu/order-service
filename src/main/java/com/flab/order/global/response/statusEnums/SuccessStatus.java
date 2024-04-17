@@ -1,6 +1,5 @@
 package com.flab.order.global.response.statusEnums;
 
-
 import com.flab.order.global.response.BaseCode;
 import com.flab.order.global.response.ResponseDTO;
 import lombok.AllArgsConstructor;

@@ -1,19 +1,12 @@
 package com.flab.order.controller;
 
 import com.flab.order.domain.dto.MemberRequest;
-import com.flab.order.global.exception.GeneralHandler;
-import com.flab.order.global.resolver.LoginMember;
 import com.flab.order.global.response.ApiResponse;
-import com.flab.order.global.response.statusEnums.ErrorStatus;
-import com.flab.order.global.session.SessionMember;
 import com.flab.order.service.MemberService;
-import com.flab.order.service.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
