@@ -2,9 +2,12 @@ package com.flab.order.controller;
 
 import com.flab.order.domain.dto.MemberRequest;
 import com.flab.order.global.exception.GeneralHandler;
+import com.flab.order.global.resolver.LoginMember;
 import com.flab.order.global.response.ApiResponse;
 import com.flab.order.global.response.statusEnums.ErrorStatus;
+import com.flab.order.global.session.SessionMember;
 import com.flab.order.service.MemberService;
+import com.flab.order.service.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
@@ -25,11 +28,8 @@ public class MemberController {
 
     @Operation(summary = "로그인 API")
     @PostMapping("/login")
-    public ApiResponse<String> login(@Valid @RequestBody MemberRequest.Login request, HttpSession session) {
-        if (!memberService.authenticate(request.getEmail(), request.getPassword())) {
-            throw new GeneralHandler(ErrorStatus.INVALID_PASSWORD);
-        }
-        session.setAttribute("memberEmail", request.getEmail());
+    public ApiResponse<String> login(@Valid @RequestBody MemberRequest.Login request) {
+        memberService.loginUser(request.getEmail(), request.getPassword());
         return ApiResponse.onSuccess("로그인에 성공하였습니다.");
     }
 

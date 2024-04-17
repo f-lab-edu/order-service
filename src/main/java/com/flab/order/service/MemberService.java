@@ -14,11 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final SessionService sessionService;
 
-    public boolean authenticate(String email, String password) {
-        Member member = memberMapper.findByEmail(email)
-                .orElseThrow(()-> new GeneralHandler(ErrorStatus.MEMBER_NOT_EXIST));
+    public boolean loginUser(String email, String password) {
+        return memberMapper.findByEmail(email)
+                .map(member -> checkPasswordAndLogin(member, password))
+                .orElseThrow(() -> new GeneralHandler(ErrorStatus.MEMBER_NOT_EXIST));
+    }
 
-        return member.getPassword().equals(password);
+    private boolean checkPasswordAndLogin(Member member, String password) {
+        if (!member.getPassword().equals(password)) {
+            throw new GeneralHandler(ErrorStatus.INVALID_PASSWORD);
+        }
+        sessionService.setAuthenticatedUser(member.getId());
+        return true;
     }
 }
