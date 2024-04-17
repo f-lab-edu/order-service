@@ -24,7 +24,7 @@ public class LoginMemberResolver implements HandlerMethodArgumentResolver {
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         HttpSession session = (request == null) ? null : request.getSession(false);
-        return findUserSessionValue(session);
+        return findUserSessionValue(session); // HttpSession에서 SessionMember를 반환
     }
 
     private SessionMember findUserSessionValue(HttpSession httpSession) {
