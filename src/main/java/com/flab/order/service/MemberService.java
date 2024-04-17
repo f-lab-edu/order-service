@@ -26,7 +26,7 @@ public class MemberService {
         if (!member.getPassword().equals(password)) {
             throw new GeneralHandler(ErrorStatus.INVALID_PASSWORD);
         }
-        sessionService.setAuthenticatedUser(member.getId());
+        sessionService.setAuthenticatedUser(member);
         return true;
     }
 }
