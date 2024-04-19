@@ -15,8 +15,14 @@ public enum ErrorStatus implements BaseCode {
     _UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "COMMON401", "인증이 필요합니다."),
     _INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON500", "서버 내의 문제가 발생했습니다."),
 
+    // 회원 MEMBER
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "MEMBER4010", "비밀번호가 일치하지 않습니다."),
-    MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, "MEMBER4040", "존재하지 않는 회원 정보입니다.");
+    MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, "MEMBER4040", "존재하지 않는 회원 정보입니다."),
+
+    // 장바구니 CART
+    EMPTY_CART(HttpStatus.UNPROCESSABLE_ENTITY, "CART4220", "장바구니가 비어있습니다."),
+    INVALID_QUANTITY(HttpStatus.CONFLICT, "CART4090", "장바구니에 담긴 상품의 재고가 부족합니다."),
+    INVALID_TOTAL_PRICE(HttpStatus.CONFLICT, "CART4091", "장바구니에 담긴 상품의 총액이 회원의 잔액을 초과하였습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
