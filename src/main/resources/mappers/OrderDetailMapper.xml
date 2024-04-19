@@ -5,4 +5,12 @@
         SELECT * FROM ORDER_DETAIL
         WHERE orderId = #{orderId} AND productId = #{productId}
     </select>
+
+    <insert id="saveAll" parameterType="list">
+        INSERT INTO ORDER_DETAIL (orderId, productId, price, quantity)
+        VALUES
+        <foreach collection="list" item="detail" separator=",">
+            (#{detail.orderId}, #{detail.productId}, #{detail.price}, #{detail.quantity})
+        </foreach>
+    </insert>
 </mapper>
