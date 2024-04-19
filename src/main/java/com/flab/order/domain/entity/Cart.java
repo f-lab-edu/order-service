@@ -10,4 +10,7 @@ public class Cart {
     private Long productId;
     private Integer quantity;
     private Instant createdAt;
+
+    // 연관된 상품 객체
+    private Product product;
 }

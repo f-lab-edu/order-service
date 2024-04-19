@@ -5,4 +5,21 @@
         SELECT * FROM CART
         WHERE memberId = #{memberId} AND productId = #{productId}
     </select>
+
+    <select id="findByMemberId" resultType="com.flab.order.domain.entity.Cart">
+        SELECT c.memberId,
+               c.productId,
+               c.quantity,
+               c.createdAt,
+               p.id          AS "product.id",
+               p.name        AS "product.name",
+               p.description AS "product.description",
+               p.price       AS "product.price",
+               p.stock       AS "product.stock",
+               p.createdAt   AS "product.createdAt"
+        FROM cart c
+                 JOIN product p ON c.productId = p.id
+        WHERE c.memberId = #{memberId}
+    </select>
+
 </mapper>
