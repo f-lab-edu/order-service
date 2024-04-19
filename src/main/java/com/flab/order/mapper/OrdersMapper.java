@@ -8,4 +8,6 @@ import java.util.Optional;
 @Mapper
 public interface OrdersMapper {
     Optional<Orders> findById(Long id);
+
+    void save(Orders order);
 }

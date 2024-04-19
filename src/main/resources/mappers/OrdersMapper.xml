@@ -4,4 +4,9 @@
     <select id="findById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Orders">
         SELECT * FROM ORDERS WHERE id = #{id}
     </select>
+
+    <insert id="save" parameterType="com.flab.order.domain.entity.Orders" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Orders (memberId, status, totalPrice, createdAt, updatedAt)
+        VALUES (#{memberId}, #{status}, #{totalPrice}, #{createdAt}, #{updatedAt})
+    </insert>
 </mapper>
