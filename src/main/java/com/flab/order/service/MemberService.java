@@ -29,4 +29,9 @@ public class MemberService {
         sessionService.setAuthenticatedUser(member);
         return true;
     }
+
+    public Member getMember(Long memberId){
+        return memberMapper.findById(memberId)
+                .orElseThrow(() -> new GeneralHandler(ErrorStatus.MEMBER_NOT_EXIST));
+    }
 }
