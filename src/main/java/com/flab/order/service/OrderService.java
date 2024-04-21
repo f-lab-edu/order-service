@@ -22,6 +22,7 @@ public class OrderService {
     private final OrderDetailMapper orderDetailMapper;
     private final MemberService memberService;
     private final CartService cartService;
+    private final ProductService productService;
 
     public OrderResponse.Success orderCartItems(Long memberId){
         // 로그인 회원 정보 불러오기
@@ -32,6 +33,9 @@ public class OrderService {
         createOrder(member, cartValidationResult);
         // 장바구니 비우기
         cartService.emptyCart(memberId);
+        // 상품 재고 감소
+        productService.decreaseStock(cartValidationResult.getCartItemList());
+
 
         return null;
     }

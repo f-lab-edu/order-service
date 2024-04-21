@@ -22,7 +22,10 @@ public enum ErrorStatus implements BaseCode {
     // 장바구니 CART
     EMPTY_CART(HttpStatus.UNPROCESSABLE_ENTITY, "CART4220", "장바구니가 비어있습니다."),
     INVALID_QUANTITY(HttpStatus.CONFLICT, "CART4090", "장바구니에 담긴 상품의 재고가 부족합니다."),
-    INVALID_TOTAL_PRICE(HttpStatus.CONFLICT, "CART4091", "장바구니에 담긴 상품의 총액이 회원의 잔액을 초과하였습니다.");
+    INVALID_TOTAL_PRICE(HttpStatus.CONFLICT, "CART4091", "장바구니에 담긴 상품의 총액이 회원의 잔액을 초과하였습니다."),
+
+    // 상품 PRODUCT
+    INVALID_STOCK(HttpStatus.CONFLICT, "PRODUCT4090", "상품의 재고가 부족합니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
