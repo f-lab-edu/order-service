@@ -23,6 +23,7 @@ public class OrderService {
     private final MemberService memberService;
     private final CartService cartService;
     private final ProductService productService;
+    private final PaymentService paymentService;
 
     public OrderResponse.Success orderCartItems(Long memberId){
         // 로그인 회원 정보 불러오기
@@ -30,19 +31,21 @@ public class OrderService {
         // 장바구니 상품 재고와 가격 확인
         CartValidationResult cartValidationResult = cartService.checkStockAndPrice(member);
         // 주문서 생성
-        createOrder(member, cartValidationResult);
+        Long orderId = createOrder(member, cartValidationResult);
         // 장바구니 비우기
         cartService.emptyCart(memberId);
         // 상품 재고 감소
         productService.decreaseStock(cartValidationResult.getCartItemList());
         // 회원 잔액 감소
         memberService.decreaseBalance(memberId, cartValidationResult.getTotalPrice());
+        // 결제 처리
+        paymentService.processOrderPayment(orderId, cartValidationResult.getTotalPrice());
 
         return null;
     }
 
     @Transactional
-    public void createOrder(Member member, CartValidationResult validationResult) {
+    public Long createOrder(Member member, CartValidationResult validationResult) {
         Orders newOrder = Orders.createOrder(member.getId(), validationResult.getTotalPrice());
         ordersMapper.save(newOrder);
 
@@ -50,5 +53,7 @@ public class OrderService {
                 .map(cart -> OrderDetail.createOrderDetail(newOrder.getId(), cart))
                 .collect(Collectors.toList());
         orderDetailMapper.saveAll(newOrderDetailList);
+
+        return newOrder.getId();
     }
 }
