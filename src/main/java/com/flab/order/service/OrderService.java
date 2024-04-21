@@ -27,9 +27,9 @@ public class OrderService {
         // 로그인 회원 정보 불러오기
         Member member = memberService.getMember(memberId);
         // 장바구니 상품 재고와 가격 확인
-        CartValidationResult validationResult = cartService.checkStockAndPrice(member);
+        CartValidationResult cartValidationResult = cartService.checkStockAndPrice(member);
         // 주문서 생성
-        createOrder(member, validationResult);
+        createOrder(member, cartValidationResult);
 
         return null;
     }
