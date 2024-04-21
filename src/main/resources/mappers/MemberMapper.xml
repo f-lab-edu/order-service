@@ -8,4 +8,10 @@
     <select id="findByEmail" parameterType="java.lang.String" resultType="com.flab.order.domain.entity.Member">
         SELECT * FROM MEMBER WHERE email = #{email}
     </select>
+
+    <update id="updateByIdAndBalance" parameterType="map">
+        UPDATE MEMBER
+        SET balance = balance - #{totalPrice}
+        WHERE id = #{memberId} AND balance >= #{totalPrice}
+    </update>
 </mapper>
