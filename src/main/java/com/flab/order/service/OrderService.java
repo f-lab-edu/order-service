@@ -35,7 +35,8 @@ public class OrderService {
         cartService.emptyCart(memberId);
         // 상품 재고 감소
         productService.decreaseStock(cartValidationResult.getCartItemList());
-
+        // 회원 잔액 감소
+        memberService.decreaseBalance(memberId, cartValidationResult.getTotalPrice());
 
         return null;
     }

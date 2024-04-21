@@ -18,6 +18,7 @@ public enum ErrorStatus implements BaseCode {
     // 회원 MEMBER
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "MEMBER4010", "비밀번호가 일치하지 않습니다."),
     MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, "MEMBER4040", "존재하지 않는 회원 정보입니다."),
+    INVALID_BALANCE(HttpStatus.CONFLICT, "MEMBER4090", "회원의 잔액이 부족합니다."),
 
     // 장바구니 CART
     EMPTY_CART(HttpStatus.UNPROCESSABLE_ENTITY, "CART4220", "장바구니가 비어있습니다."),

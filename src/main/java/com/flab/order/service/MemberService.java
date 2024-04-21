@@ -34,4 +34,11 @@ public class MemberService {
         return memberMapper.findById(memberId)
                 .orElseThrow(() -> new GeneralHandler(ErrorStatus.MEMBER_NOT_EXIST));
     }
+
+    @Transactional
+    public void decreaseBalance(Long memberId, int totalPrice){
+        if(memberMapper.updateByIdAndBalance(memberId, totalPrice) == 0){
+            throw new GeneralHandler(ErrorStatus.INVALID_BALANCE);
+        }
+    }
 }
