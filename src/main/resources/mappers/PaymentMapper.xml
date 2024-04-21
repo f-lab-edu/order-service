@@ -4,4 +4,9 @@
     <select id="findById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Payment">
         SELECT * FROM PAYMENT WHERE id = #{id}
     </select>
+
+    <insert id="save" parameterType="com.flab.order.domain.entity.Payment">
+        INSERT INTO Payment (orderId, amount, status, createdAt, updatedAt)
+        VALUES (#{orderId}, #{amount}, #{status}, #{createdAt}, #{updatedAt})
+    </insert>
 </mapper>
