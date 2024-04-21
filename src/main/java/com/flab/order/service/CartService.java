@@ -50,4 +50,8 @@ public class CartService {
         }
         return totalPrice;
     }
+
+    public void emptyCart(Long memberId){
+        cartMapper.deleteByMemberId(memberId);
+    }
 }

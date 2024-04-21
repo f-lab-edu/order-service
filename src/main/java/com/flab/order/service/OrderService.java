@@ -30,6 +30,8 @@ public class OrderService {
         CartValidationResult cartValidationResult = cartService.checkStockAndPrice(member);
         // 주문서 생성
         createOrder(member, cartValidationResult);
+        // 장바구니 비우기
+        cartService.emptyCart(memberId);
 
         return null;
     }

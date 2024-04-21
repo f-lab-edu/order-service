@@ -22,4 +22,8 @@
         WHERE c.memberId = #{memberId}
     </select>
 
+    <delete id="deleteByMemberId" parameterType="long">
+        DELETE FROM Cart WHERE memberId = #{memberId}
+    </delete>
+
 </mapper>
