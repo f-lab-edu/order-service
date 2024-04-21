@@ -1,10 +1,7 @@
 package com.flab.order.service;
 
 import com.flab.order.domain.dto.OrderResponse;
-import com.flab.order.domain.entity.Cart;
-import com.flab.order.domain.entity.Member;
-import com.flab.order.domain.entity.OrderDetail;
-import com.flab.order.domain.entity.Orders;
+import com.flab.order.domain.entity.*;
 import com.flab.order.domain.vo.CartValidationResult;
 import com.flab.order.mapper.OrderDetailMapper;
 import com.flab.order.mapper.OrdersMapper;
@@ -40,6 +37,8 @@ public class OrderService {
         memberService.decreaseBalance(memberId, cartValidationResult.getTotalPrice());
         // 결제 처리
         paymentService.processOrderPayment(orderId, cartValidationResult.getTotalPrice());
+        // 주문 상태 변경: PENDING(대기) -> COMPLETE(완료)
+        updateStatusToComplete(orderId);
 
         return null;
     }
@@ -55,5 +54,9 @@ public class OrderService {
         orderDetailMapper.saveAll(newOrderDetailList);
 
         return newOrder.getId();
+    }
+
+    private void updateStatusToComplete(Long orderId){
+        ordersMapper.updateStatus(orderId, Status.COMPLETE.name());
     }
 }

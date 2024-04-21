@@ -9,4 +9,10 @@
         INSERT INTO Orders (memberId, status, totalPrice, createdAt, updatedAt)
         VALUES (#{memberId}, #{status}, #{totalPrice}, #{createdAt}, #{updatedAt})
     </insert>
+
+    <update id="updateStatus" parameterType="map">
+        UPDATE ORDERS
+        SET status = #{status}
+        WHERE id = #{orderId}
+    </update>
 </mapper>
