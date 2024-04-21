@@ -4,4 +4,12 @@
     <select id="findById" parameterType="java.lang.Long" resultType="com.flab.order.domain.entity.Product">
         SELECT * FROM PRODUCT WHERE id = #{id}
     </select>
+
+    <update id="updateAllByStock">
+        <foreach collection="list" item="item" separator=",">
+            UPDATE PRODUCT
+            SET stock = stock - #{item.quantity}
+            WHERE id = #{item.productId} AND stock >= #{item.quantity}
+        </foreach>
+    </update>
 </mapper>
