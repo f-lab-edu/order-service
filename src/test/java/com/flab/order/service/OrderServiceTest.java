@@ -41,7 +41,7 @@ public class OrderServiceTest {
 
     @Test
     @DisplayName("[시나리오 1] 2명의 회원이 동시에 재고가 1인 상품 주문 시도") // 상품 재고가 -1 이하가 되어서는 안됨
-    void testOrderConcurrency() {
+    void testOrderConcurrency1() {
         Long memberId1 = 2L;
         Long memberId2 = 3L;
 
@@ -66,6 +66,6 @@ public class OrderServiceTest {
             exceptionCount++;
         }
 
-        assertEquals(1, exceptionCount, "회원 한 명의 주문을 성공적으로 처리했습니다.");
+        assertEquals(1, exceptionCount, "상품 재고 동시성 테스트에 실패했습니다.");
     }
 }
