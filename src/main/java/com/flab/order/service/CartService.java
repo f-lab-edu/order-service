@@ -8,6 +8,7 @@ import com.flab.order.global.response.statusEnums.ErrorStatus;
 import com.flab.order.mapper.CartMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class CartService {
         return totalPrice;
     }
 
+    @Transactional
     public void emptyCart(Long memberId){
         cartMapper.deleteByMemberId(memberId);
     }
