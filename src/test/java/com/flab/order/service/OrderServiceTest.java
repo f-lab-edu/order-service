@@ -48,24 +48,24 @@ public class OrderServiceTest {
         Future<?> future1 = executorService.submit(() -> orderService.orderCartItems(memberId1));
         Future<?> future2 = executorService.submit(() -> orderService.orderCartItems(memberId2));
 
-        int exceptionCount = 0;
+        int successCount = 0;
 
         try {
             future1.get();
             logger.info("[TEST] 회원 2가 성공적으로 상품 2를 주문했습니다.");
+            successCount++;
         } catch (Exception e) {
             logger.info("[TEST] 회원 2가 상품 2 주문에 실패했습니다. " + e.getMessage());
-            exceptionCount++;
         }
 
         try {
-            future2.get(); // 두 번째 작업의 완료와 예외 검사
+            future2.get();
             logger.info("[TEST] 회원 3이 성공적으로 상품 2를 주문했습니다.");
+            successCount++;
         } catch (Exception e) {
             logger.info("[TEST] 회원 3이 상품 2 주문에 실패했습니다. " + e.getMessage());
-            exceptionCount++;
         }
 
-        assertEquals(1, exceptionCount, "상품 재고 동시성 테스트에 실패했습니다.");
+        assertEquals(1, successCount, "상품 재고 동시성 테스트에 실패했습니다.");
     }
 }
