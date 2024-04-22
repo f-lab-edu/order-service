@@ -98,4 +98,34 @@ public class OrderServiceTest {
 
         assertEquals(1, successCount, "상품 재고 동시성 테스트에 실패했습니다.");
     }
+
+    @Test
+    @DisplayName("[시나리오 3] 2명의 회원이 동시에 재고가 5인 상품을 각각 3개, 2개 주문 시도")
+    void testOrderConcurrency3() {
+        Long memberId1 = 4L;
+        Long memberId2 = 6L;
+
+        Future<?> future1 = executorService.submit(() -> orderService.orderCartItems(memberId1));
+        Future<?> future2 = executorService.submit(() -> orderService.orderCartItems(memberId2));
+
+        int successCount = 0;
+
+        try {
+            future1.get();
+            logger.info("[TEST] 회원 4가 성공적으로 상품 3을 주문했습니다.");
+            successCount++;
+        } catch (Exception e) {
+            logger.info("[TEST] 회원 4가 상품 3 주문에 실패했습니다. " + e.getMessage());
+        }
+
+        try {
+            future2.get();
+            logger.info("[TEST] 회원 6이 성공적으로 상품 3을 주문했습니다.");
+            successCount++;
+        } catch (Exception e) {
+            logger.info("[TEST] 회원 6이 상품 3 주문에 실패했습니다. " + e.getMessage());
+        }
+
+        assertEquals(2, successCount, "상품 재고 동시성 테스트에 실패했습니다.");
+    }
 }
