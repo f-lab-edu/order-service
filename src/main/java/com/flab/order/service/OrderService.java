@@ -1,5 +1,6 @@
 package com.flab.order.service;
 
+import com.flab.order.converter.OrderConverter;
 import com.flab.order.domain.dto.OrderResponse;
 import com.flab.order.domain.entity.*;
 import com.flab.order.domain.vo.CartValidationResult;
@@ -59,7 +60,7 @@ public class OrderService {
         updateStatusToComplete(orderId);
         logger.info("주문 처리 완료: 회원 ID = {}, 주문 ID = {}", memberId, orderId);
 
-        return null;
+        return OrderConverter.toSuccess(cartValidationResult);
     }
 
     @Transactional
