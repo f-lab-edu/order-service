@@ -9,10 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +27,7 @@ public class OrderServiceTest {
 
     @BeforeEach
     void setUp() {
-        executorService = Executors.newFixedThreadPool(2);
+        executorService = Executors.newFixedThreadPool(10);
     }
 
     @AfterEach
@@ -127,5 +126,31 @@ public class OrderServiceTest {
         }
 
         assertEquals(2, successCount, "상품 재고 동시성 테스트에 실패했습니다.");
+    }
+
+    @Test
+    @DisplayName("[시나리오 4] 10명의 회원이 동시에 재고가 6인 상품을 1개씩 주문 시도")
+    void testOrderConcurrency4() throws ExecutionException, InterruptedException {
+        List<Future<Integer>> futures = new ArrayList<>();
+        for (int i = 11; i <= 20; i++) {
+            Long memberId = (long) i; // 회원 11 ~ 20
+            Future<Integer> future = executorService.submit(() -> {
+                try {
+                    orderService.orderCartItems(memberId);
+                    return 1; // 주문 성공
+                } catch (Exception e) {
+                    logger.info("[TEST] 주문 처리 실패: 회원 ID = {}", memberId);
+                    return 0; // 주문 실패
+                }
+            });
+            futures.add(future);
+        }
+
+        int successCount = 0;
+        for (Future<Integer> future : futures) {
+            successCount += future.get();
+        }
+
+        assertEquals(6, successCount, "상품 재고 동시성 테스트에 실패했습니다.");
     }
 }
