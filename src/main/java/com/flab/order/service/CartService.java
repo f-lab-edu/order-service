@@ -23,33 +23,27 @@ public class CartService {
         if (cartItemList.isEmpty()) {
             throw new GeneralHandler(ErrorStatus.EMPTY_CART);
         }
-        // 장바구니에 담긴 수량과 상품 재고 비교
-        validateStock(cartItemList);
-        // 장바구니 상품 총액과 회원 잔액 비교
-        return new CartValidationResult(cartItemList, validateBalance(cartItemList, member.getBalance()));
-    }
+        // 장바구니에 담긴 수량과 상품 재고 검증
+        cartItemList.forEach(Cart::validateStock);
 
-    private void validateStock(List<Cart> cartItemList) {
-        cartItemList.stream()
-                .filter(cart -> cart.getProduct().getStock() < cart.getQuantity())
-                .findFirst()
-                .ifPresent(cart -> {
-                    throw new GeneralHandler(ErrorStatus.INVALID_QUANTITY);
-                });
+        // 총 가격과 회원의 잔액을 검증
+        int totalPrice = calculateTotalPrice(cartItemList);
+        validateBalance(totalPrice, member.getBalance());
+
+        // 장바구니 상품 총액과 회원 잔액 비교
+        return new CartValidationResult(cartItemList, totalPrice);
     }
 
     private int calculateTotalPrice(List<Cart> cartItemList) {
         return cartItemList.stream()
-                .mapToInt(cart -> cart.getProduct().getPrice() * cart.getQuantity())
+                .mapToInt(Cart::calculatePrice)
                 .sum();
     }
 
-    private int validateBalance(List<Cart> cartItemList, int balance) {
-        int totalPrice = calculateTotalPrice(cartItemList);
+    private void validateBalance(int totalPrice, int balance) {
         if (totalPrice > balance) {
             throw new GeneralHandler(ErrorStatus.INVALID_TOTAL_PRICE);
         }
-        return totalPrice;
     }
 
     @Transactional
