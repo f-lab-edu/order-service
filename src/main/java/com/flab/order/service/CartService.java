@@ -7,6 +7,8 @@ import com.flab.order.global.exception.GeneralHandler;
 import com.flab.order.global.response.statusEnums.ErrorStatus;
 import com.flab.order.mapper.CartMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +17,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CartService {
+    Logger logger = LoggerFactory.getLogger(CartService.class);
+
     private final CartMapper cartMapper;
 
     public CartValidationResult checkStockAndPrice(Member member) {
         List<Cart> cartItemList = cartMapper.findByMemberId(member.getId());
         // 장바구니 비어있는지 확인
         if (cartItemList.isEmpty()) {
+            logger.error("장바구니 비어있음: 회원 ID = {}", member.getId());
             throw new GeneralHandler(ErrorStatus.EMPTY_CART);
         }
         // 장바구니에 담긴 수량과 상품 재고 검증
