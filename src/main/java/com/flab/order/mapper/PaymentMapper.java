@@ -8,4 +8,6 @@ import java.util.Optional;
 @Mapper
 public interface PaymentMapper {
     Optional<Payment> findById(Long id);
+
+    void save(Payment payment);
 }
